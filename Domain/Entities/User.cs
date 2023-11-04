@@ -9,6 +9,8 @@ namespace GADistribuidora.Domain.Entities
         public bool Deleted { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
+        public Company Company { get; set; }
+        public Guid CompanyId { get; set; }
 
         public User() { }
 

@@ -8,7 +8,7 @@ namespace GADistribuidora.Infraestructure.Persistance.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            
+
         }
     }
 }

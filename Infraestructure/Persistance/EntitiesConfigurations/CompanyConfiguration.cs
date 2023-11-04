@@ -8,7 +8,12 @@ namespace GADistribuidora.Infraestructure.Persistance.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
-            
+            //Relationships
+            builder.HasMany(u => u.Users).WithOne(c => c.Company).HasForeignKey(x => x.CompanyId).IsRequired();
+
+            //Properties
+            builder.Property(x => x.Name).HasMaxLength(100);
+            builder.Property(x => x.Phone).HasMaxLength(40);
         }
     }
 }

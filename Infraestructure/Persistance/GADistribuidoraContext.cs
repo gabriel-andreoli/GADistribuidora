@@ -1,5 +1,6 @@
 ﻿using GADistribuidora.Domain.Entities;
 using GADistribuidora.Infraestructure.Persistance.EntitiesConfigurations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -13,7 +14,6 @@ namespace GADistribuidora.Infraestructure.Persistance
 
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<BusinessUnit> BusinessUnities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -21,9 +21,11 @@ namespace GADistribuidora.Infraestructure.Persistance
             .SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
 
+            builder.Ignore<IdentityUserLogin<Guid>>();
+            builder.Ignore<IdentityUserRole<Guid>>();
+            builder.Ignore<IdentityUserToken<Guid>>();
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new CompanyConfiguration());
-            builder.ApplyConfiguration(new BusinessUnitConfiguration());
         }
     }
 }

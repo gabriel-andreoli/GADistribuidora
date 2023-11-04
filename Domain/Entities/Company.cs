@@ -4,5 +4,7 @@
     {
         public string? Name { get; set; }
         public string? Phone { get; set; }
+        public ICollection<User> Users { get; set; }
+        public Company() { }
     }
 }
