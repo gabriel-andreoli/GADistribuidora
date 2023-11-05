@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\Repositories\Interfaces\" />
+    <Folder Include="Domain\Repositories\Implementations\" />
     <Folder Include="Infraestructure\Persistance\Migrations\" />
     <Folder Include="Presentation\Controllers\" />
     <Folder Include="Presentation\DTOs\" />

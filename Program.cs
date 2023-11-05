@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using GADistribuidora.Domain.Services.Interfaces;
+using GADistribuidora.Domain.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,11 +39,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
      {
          ValidateIssuer = true,
          ValidateAudience = true,
-         ValidAudience = builder.Configuration["JWT:ValidAudience"],
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
          ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+         ValidAudience = builder.Configuration["JWT:ValidAudience"],
          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
      };
  });
+
+//Containers and Dependency Injection
+builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
