@@ -1,6 +1,8 @@
 ﻿using GADistribuidora.Domain.Entities;
 using GADistribuidora.Domain.Services.Interfaces;
+using GADistribuidora.Presentation.Commands;
 using Microsoft.AspNetCore.Identity;
+using System.Net.Mail;
 
 namespace GADistribuidora.Domain.Services.Implementations
 {
@@ -26,13 +28,12 @@ namespace GADistribuidora.Domain.Services.Implementations
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<bool> RegisterUser(string email, string password)
+        public async Task RegisterUser(RegisterUserCommand command)
         {
-            var user = new User() { Email = email };
-            var result = await _userManager.CreateAsync(user, password);
-            if (result.Succeeded)
-                await _signInManager.SignInAsync(user, isPersistent: false);
-            return result.Succeeded;
+            var user = new User() { Email = command.Email, UserName = command.UserName };
+            var result = await _userManager.CreateAsync(user, command.Password);
+            if (!result.Succeeded)
+                throw new Exception("Erro, contate o suporte para atendimento");
         }
     }
 }
