@@ -1,17 +1,18 @@
 ﻿using GADistribuidora.Domain.Entities;
 using GADistribuidora.Domain.Services.Interfaces;
+using GADistribuidora.Infraestructure.Persistance;
 using GADistribuidora.Presentation.Commands;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 
 namespace GADistribuidora.Domain.Services.Implementations
 {
-    public class AuthenticateService : IAuthenticateService
+    public class AuthenticateService : ServiceBase, IAuthenticateService
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
-        public AuthenticateService(SignInManager<User> signInManager, UserManager<User> userManager)
+        public AuthenticateService(SignInManager<User> signInManager, UserManager<User> userManager, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -34,6 +35,7 @@ namespace GADistribuidora.Domain.Services.Implementations
             var result = await _userManager.CreateAsync(user, command.Password);
             if (!result.Succeeded)
                 throw new Exception("Erro, contate o suporte para atendimento");
+            Commit();
         }
     }
 }

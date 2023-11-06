@@ -16,8 +16,8 @@ namespace GADistribuidora.Presentation.Commands
             if (Password != ConfirmPassword)
                 result.Add("As senhas não conferem, verifique os dados e tente novamente");
 
-            if (Password.Length <= 5)
-                result.Add("A senha deve conter mais do que 5 caracteres");
+            if (Password.Length <= 4)
+                result.Add("A senha deve conter 5 ou mais caracteres");
 
             try
             {

@@ -9,11 +9,16 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Domain.Services.Implementations;
+using GADistribuidora.Presentation.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new ApiExceptionFilterAttribute());
+});
 
 
 var conn = builder.Configuration.GetConnectionString("PgConn");
@@ -49,8 +54,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 //Containers and Dependency Injection
 builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

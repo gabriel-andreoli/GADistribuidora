@@ -30,7 +30,7 @@ namespace GADistribuidora.Presentation.Controllers
             List<string> isValidCredentials = command.VerifyCredentials();
             if (isValidCredentials.Any())
                 return new BadRequestObjectResult(isValidCredentials.First());
-            _authenticateService.RegisterUser(command);
+            await _authenticateService.RegisterUser(command);
             return new OkObjectResult("Usuário criado com sucesso");
         }
 
