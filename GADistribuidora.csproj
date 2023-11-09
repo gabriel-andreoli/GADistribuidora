@@ -25,10 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\ExtensionMethods\SystemExtension\" />
-    <Folder Include="Domain\ExtensionMethods\ApiExtension\" />
-    <Folder Include="Domain\Repositories\Interfaces\" />
-    <Folder Include="Domain\Repositories\Implementations\" />
-    <Folder Include="Infraestructure\Persistance\Migrations\" />
+    <Folder Include="Infraestructure\Persistence\Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GADistribuidora.Infraestructure.Persistance.EntitiesConfigurations
+namespace GADistribuidora.Infraestructure.Persistence.EntitiesConfigurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

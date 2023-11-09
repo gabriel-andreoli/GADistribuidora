@@ -1,4 +1,4 @@
-﻿namespace GADistribuidora.Infraestructure.Persistance
+﻿namespace GADistribuidora.Infraestructure.Persistence
 {
     public interface IUnitOfWork
     {

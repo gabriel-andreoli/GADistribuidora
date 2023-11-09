@@ -1,5 +1,5 @@
 using GADistribuidora.Domain.Entities;
-using GADistribuidora.Infraestructure.Persistance;
+using GADistribuidora.Infraestructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,22 +10,24 @@ using System.Text;
 using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Domain.Services.Implementations;
 using GADistribuidora.Presentation.Filters;
+using GADistribuidora.Domain.Repositories.Implementations;
+using GADistribuidora.Domain.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add(new ApiExceptionFilterAttribute());
-});
-
+//builder.Services.AddControllers(options =>
+//{
+//    options.Filters.Add(new ApiExceptionFilterAttribute());
+//});
+builder.Services.AddControllers();
 
 var conn = builder.Configuration.GetConnectionString("PgConn");
 
 builder.Services.AddDbContext<GADistribuidoraContext>(o => o.UseNpgsql(conn));
 
-builder.Services.AddIdentity<User, UserIdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<GADistribuidoraContext>()
             .AddDefaultTokenProviders();
 
@@ -42,8 +44,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
      options.RequireHttpsMetadata = false;
      options.TokenValidationParameters = new TokenValidationParameters()
      {
-         ValidateIssuer = true,
-         ValidateAudience = true,
+         ValidateIssuer = false,
+         ValidateAudience = false,
          ValidateLifetime = true,
          ValidateIssuerSigningKey = true,
          ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
@@ -53,8 +55,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
  });
 
 //Containers and Dependency Injection
-builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

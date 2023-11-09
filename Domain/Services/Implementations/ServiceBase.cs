@@ -1,4 +1,4 @@
-﻿using GADistribuidora.Infraestructure.Persistance;
+﻿using GADistribuidora.Infraestructure.Persistence;
 
 namespace GADistribuidora.Domain.Services.Implementations
 {

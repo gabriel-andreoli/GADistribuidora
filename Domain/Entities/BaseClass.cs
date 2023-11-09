@@ -4,13 +4,13 @@
     {
         public Guid Id { get; set; }
         public bool Deleted { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
-        public void InitializeEntity() 
+        public void GenerateId() 
         {
             Id = Guid.NewGuid();
-            CreatedAt = DateTimeOffset.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public void DeleteMe() 
@@ -19,6 +19,6 @@
             UpdateMe();
         }
 
-        public void UpdateMe() => UpdatedAt = DateTimeOffset.Now;
+        public void UpdateMe() => UpdatedAt = DateTime.UtcNow;
     }
 }

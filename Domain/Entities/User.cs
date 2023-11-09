@@ -7,17 +7,18 @@ namespace GADistribuidora.Domain.Entities
     {
         public EUserRole Role { get; set; }
         public bool Deleted { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string Name { get; set; }
         public Company Company { get; set; }
         public Guid CompanyId { get; set; }
 
         public User() { }
 
-        public void InitializeEntity()
+        public void GenerateId()
         {
             Id = Guid.NewGuid();
-            CreatedAt = DateTimeOffset.Now;
+            CreatedAt = DateTime.UtcNow;
         }
 
         public void DeleteMe()
@@ -26,6 +27,6 @@ namespace GADistribuidora.Domain.Entities
             UpdateMe();
         }
 
-        public void UpdateMe() => UpdatedAt = DateTimeOffset.Now;
+        public void UpdateMe() => UpdatedAt = DateTime.UtcNow;
     }
 }
