@@ -25,8 +25,8 @@ namespace GADistribuidora.Domain.Services.Implementations
         public async Task<bool> Authenticate(string email, string password)
         {
             var user = _userRepository.GetByEmail(email);
-            if (user == null)
-                throw new ArgumentException("Email ou senha inválidos.");
+            if (user is null)
+                return false;
             var result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
             return result.Succeeded;
         }
@@ -38,6 +38,10 @@ namespace GADistribuidora.Domain.Services.Implementations
 
         public async Task RegisterUser(RegisterUserCommand command)
         {
+            var emailExists = _userRepository.GetByEmail(command.Email);
+            if (emailExists != null)
+                throw new ArgumentException("O Email já existe, informe um válido ou entre em contato com o suporte.");
+
             var user = new User() { Email = command.Email, UserName = command.Email, Name = command.Name };
             user.GenerateId();
             if (command.CompanyId == null)

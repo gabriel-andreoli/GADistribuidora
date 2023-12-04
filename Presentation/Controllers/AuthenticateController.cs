@@ -43,7 +43,7 @@ namespace GADistribuidora.Presentation.Controllers
         {
             var isValidUser = await _authenticateService.Authenticate(command.Email, command.Password);
             if (isValidUser)
-                return Ok(GenerateToken(command));
+                return Ok(await GenerateToken(command));
             else
                 return BadRequest("Login ou senha inválidos");
         }
