@@ -6,6 +6,5 @@ namespace GADistribuidora.Domain.Repositories.Interfaces
     public interface IUserRepository
     {
         User GetByEmail(string email);
-        User GetById(Guid id);
     }
 }

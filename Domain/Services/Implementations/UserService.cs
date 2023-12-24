@@ -20,11 +20,5 @@ namespace GADistribuidora.Domain.Services.Implementations
             return _userRepository.GetByEmail(email);
         }
 
-        public async Task<UserDTO> GetById(Guid id) 
-        {
-            var user = _userRepository.GetById(id);
-            return user.ToUserDTO();
-        }
-
     }
 }

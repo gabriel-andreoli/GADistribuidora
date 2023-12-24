@@ -6,22 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GADistribuidora.Domain.Repositories.Implementations
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<UserRepository>, IUserRepository
     {
         private readonly GADistribuidoraContext _context;
-        public UserRepository(GADistribuidoraContext context)
-        {
-            _context = context;
-        }
+        public UserRepository(GADistribuidoraContext context) : base(context) { }
 
         public User GetByEmail(string email)
         {
             return _context.Users.FirstOrDefault(x => x.Email == email && !x.Deleted);    
-        }
-
-        public User GetById(Guid id)
-        {
-            return _context.Users.FirstOrDefault(x => x.Id == id && !x.Deleted);
         }
     }
 }
