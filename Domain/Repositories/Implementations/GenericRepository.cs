@@ -7,7 +7,7 @@ namespace GADistribuidora.Domain.Repositories.Implementations
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly GADistribuidoraContext _context; 
+        protected readonly GADistribuidoraContext _context; 
         public GenericRepository(GADistribuidoraContext context) 
         {
             _context = context;

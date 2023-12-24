@@ -20,5 +20,19 @@ namespace GADistribuidora.Domain.Services.Implementations
             return _userRepository.GetByEmail(email);
         }
 
+        public Task<User> GetByIdAsync(Guid id)
+        {
+            return _userRepository.GetByIdAsync(x => x.Id == id);
+        }
+
+        public async Task<ICollection<UserDTO>> GetAll() 
+        {
+            var users = _userRepository.GetAllAsQueryable().Where(x => !x.Deleted);
+            ICollection<UserDTO> result = new List<UserDTO>();
+            foreach (var user in users)
+                result.Add(user.ToUserDTO());
+            return result;
+        }
+
     }
 }

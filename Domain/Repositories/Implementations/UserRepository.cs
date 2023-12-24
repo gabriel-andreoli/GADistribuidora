@@ -6,9 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GADistribuidora.Domain.Repositories.Implementations
 {
-    public class UserRepository : GenericRepository<UserRepository>, IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
-        private readonly GADistribuidoraContext _context;
         public UserRepository(GADistribuidoraContext context) : base(context) { }
 
         public User GetByEmail(string email)
