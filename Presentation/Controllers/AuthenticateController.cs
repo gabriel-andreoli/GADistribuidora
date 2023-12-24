@@ -30,9 +30,6 @@ namespace GADistribuidora.Presentation.Controllers
         [Route("CreateUser")]
         public async Task<ActionResult> RegisterUser(RegisterUserCommand command)
         {
-            List<string> isValidCredentials = command.VerifyCredentials();
-            if (isValidCredentials.Any())
-                return BadRequest(isValidCredentials.First());
             await _authenticateService.RegisterUser(command);
             return Created("", "Usuário criado com sucesso");
         }

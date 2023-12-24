@@ -21,7 +21,7 @@ namespace GADistribuidora.Presentation.Controllers
         [Route("{id}")]
         public async Task<ActionResult<UserDTO>> GetById(Guid id) 
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(x => x.Id == id);
             if (user == null)
                 return BadRequest("O usuário não existe ou foi excluído");
             else

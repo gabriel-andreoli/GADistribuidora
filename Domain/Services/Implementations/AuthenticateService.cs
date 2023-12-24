@@ -40,7 +40,7 @@ namespace GADistribuidora.Domain.Services.Implementations
         {
             var emailExists = _userRepository.GetByEmail(command.Email);
             if (emailExists != null)
-                throw new ArgumentException("O Email já existe, informe um válido ou entre em contato com o suporte.");
+                throw new ArgumentException("O Email já está cadastrado, informe um válido ou entre em contato com o suporte.");
 
             var user = new User() { Email = command.Email, UserName = command.Email, Name = command.Name };
             user.GenerateId();

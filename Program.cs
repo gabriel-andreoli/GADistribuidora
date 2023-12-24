@@ -12,6 +12,8 @@ using GADistribuidora.Domain.Services.Implementations;
 using GADistribuidora.Presentation.Filters;
 using GADistribuidora.Domain.Repositories.Implementations;
 using GADistribuidora.Domain.Repositories.Interfaces;
+using FluentValidation.AspNetCore;
+using GADistribuidora.Infraestructure.ProgramConfigurations.Containers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,10 @@ var builder = WebApplication.CreateBuilder(args);
 //{
 //    options.Filters.Add(new ApiExceptionFilterAttribute());
 //});
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(config => 
+{
+    config.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
+});
 
 var conn = builder.Configuration.GetConnectionString("PgConn");
 
@@ -55,11 +60,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
  });
 
 //Containers and Dependency Injection
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
-
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.AddContainers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
