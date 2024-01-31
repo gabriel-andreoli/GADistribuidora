@@ -1,4 +1,5 @@
-﻿using GADistribuidora.Domain.Enums;
+﻿using GADistribuidora.Domain.Entities.ValueObjects;
+using GADistribuidora.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace GADistribuidora.Domain.Entities
@@ -9,8 +10,12 @@ namespace GADistribuidora.Domain.Entities
         public bool Deleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public string Name { get; set; }
-        public Company Company { get; set; }
+        public string? CPF { get; set; }
+        public DateTime? BornDate { get; set; }
+        public string? Name { get; set; }
+        public Address? Address { get; set; }
+        public ContactInfo? ContactInfo { get; set; }
+        public Company? Company { get; set; }
         public Guid CompanyId { get; set; }
 
         public User() { }

@@ -14,6 +14,7 @@ using GADistribuidora.Domain.Repositories.Implementations;
 using GADistribuidora.Domain.Repositories.Interfaces;
 using FluentValidation.AspNetCore;
 using GADistribuidora.Infraestructure.ProgramConfigurations.Containers;
+using GADistribuidora.Infraestructure.ProgramConfigurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,54 +29,17 @@ builder.Services.AddControllers().AddFluentValidation(config =>
     config.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
 });
 
-var conn = builder.Configuration.GetConnectionString("PgConn");
+builder.AddAuthentication();
 
-builder.Services.AddDbContext<GADistribuidoraContext>(o => o.UseNpgsql(conn));
+builder.AddIdentity();
 
-builder.Services.AddIdentity<User, IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<GADistribuidoraContext>()
-            .AddDefaultTokenProviders();
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-});
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
- {
-     options.SaveToken = true;
-     options.RequireHttpsMetadata = false;
-     options.TokenValidationParameters = new TokenValidationParameters()
-     {
-         ValidateIssuer = false,
-         ValidateAudience = false,
-         ValidateLifetime = true,
-         ValidateIssuerSigningKey = true,
-         ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-         ValidAudience = builder.Configuration["JWT:ValidAudience"],
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-     };
- });
-
-//Containers and Dependency Injection
 builder.AddContainers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
-});
-
+builder.AddCors();
 
 var app = builder.Build();
 
