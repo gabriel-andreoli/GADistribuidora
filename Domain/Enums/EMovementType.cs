@@ -2,7 +2,7 @@
 
 namespace GADistribuidora.Domain.Enums
 {
-    public enum MovementType
+    public enum EMovementType
     {
         [Description("Nenhum")]
         None = 0,

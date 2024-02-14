@@ -9,6 +9,7 @@ namespace GADistribuidora.Domain.Entities
         public string YearOfManufacture { get; set; }
         public string CapacityInCubicMeters { get; set; }
         public string Brand { get; set; }
+        public bool IsBlocked { get; set; }
         public EVehicleType Type { get; set; }
         public Company? Company { get; set; }
         public Guid CompanyId { get; set; }

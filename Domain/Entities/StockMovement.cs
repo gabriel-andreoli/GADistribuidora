@@ -1,4 +1,6 @@
-﻿namespace GADistribuidora.Domain.Entities
+﻿using GADistribuidora.Domain.Enums;
+
+namespace GADistribuidora.Domain.Entities
 {
     public class StockMovement : BaseClass
     {
@@ -6,5 +8,6 @@
         public DateTime MoveDate { get; set; }
         public WarehouseLot WarehouseLot { get; set; }
         public Guid WarehouseLotId { get; set; }
+        public EMovementType MovementType { get; set; }
     }
 }

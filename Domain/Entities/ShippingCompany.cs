@@ -2,13 +2,13 @@
 
 namespace GADistribuidora.Domain.Entities
 {
-    public class Company : BaseClass
+    public class ShippingCompany : BaseClass
     {
         public string? Name { get; set; }
         public Address Address { get; set; }
         public ContactInfo ContactInfo { get; set; }
-        public ICollection<User> Users { get; set; } = new List<User>();
-        public Company() { }
-        public Company(string name) => Name = name;
+        public Company Company { get; set; }
+        public Guid CompanyId { get; set; }
+        public ShippingCompany() { }
     }
 }
