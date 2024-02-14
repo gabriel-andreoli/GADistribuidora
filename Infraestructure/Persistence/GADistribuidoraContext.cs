@@ -14,6 +14,24 @@ namespace GADistribuidora.Infraestructure.Persistence
 
         public override DbSet<User> Users { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeItinerary> EmployeeItineraries { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Itinerary> Itineraries { get; set; }
+        public DbSet<Lot> Lots { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductOrder> ProductOrders { get; set; }
+        public DbSet<RouteItinerary> RouteItineraries { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<ShippingCompany> ShippingCompanies { get; set; }
+        public DbSet<StockMovement> StockMovements { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<WarehouseLot> WarehouseLots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,6 +43,10 @@ namespace GADistribuidora.Infraestructure.Persistence
 
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new CompanyConfiguration());
+            builder.ApplyConfiguration(new ClientConfiguration());
+            builder.ApplyConfiguration(new EmployeeConfiguration());
+            builder.ApplyConfiguration(new EmployeeItineraryConfiguration());
+            builder.ApplyConfiguration(new InvoiceConfiguration());
         }
     }
 }

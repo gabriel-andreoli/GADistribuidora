@@ -13,6 +13,7 @@ namespace GADistribuidora.Domain.Entities
         public EVehicleType Type { get; set; }
         public Company? Company { get; set; }
         public Guid CompanyId { get; set; }
+        public ICollection<Itinerary> Itineraries { get; set; } = new List<Itinerary>();
 
         public Vehicle() { }
     }

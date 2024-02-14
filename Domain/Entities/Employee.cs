@@ -14,7 +14,8 @@ namespace GADistribuidora.Domain.Entities
         public string PIS { get; set; }
         public Address Address { get; set; }
         public ContactInfo ContactInfo { get; set; }
-        public ICollection<RouteItinerary> RouteItineraries = new List<RouteItinerary>();
+
+        public ICollection<EmployeeItinerary> EmployeeItineraries = new List<EmployeeItinerary>();
         public Employee() { }
     }
 }

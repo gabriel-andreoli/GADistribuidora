@@ -12,6 +12,8 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public ICollection<RouteItinerary> RouteItineraries = new List<RouteItinerary>();
+        public ICollection<EmployeeItinerary> EmployeeItineraries = new List<EmployeeItinerary>();
+
         public Itinerary() { }
     }
 }

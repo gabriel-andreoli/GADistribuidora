@@ -4,14 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GADistribuidora.Infraestructure.Persistence.EntitiesConfigurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class ClientConfiguration : IEntityTypeConfiguration<Client>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Client> builder)
         {
-            builder.HasKey(u => u.Id);
-
-            builder.Property(u => u.Name).HasMaxLength(100);
-            builder.Property(u => u.CPF).HasMaxLength(11);
+            builder.HasKey(c => c.Id);
+            builder.HasMany(c => c.Orders).WithOne(c => c.Client).HasForeignKey(c => c.ClientId).IsRequired();
 
             builder.OwnsOne(x => x.Address, addressBuilder =>
             {
