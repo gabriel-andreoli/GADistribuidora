@@ -8,6 +8,7 @@
         public ICollection<RouteItinerary> RouteItineraries = new List<RouteItinerary>();
         public int Number { get; set; }
         public DateTime DateOfEmission { get; set; }
+        public Sale Sale { get; set; }
         public Invoice() { }
     }
 }

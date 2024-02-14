@@ -47,6 +47,17 @@ namespace GADistribuidora.Infraestructure.Persistence
             builder.ApplyConfiguration(new EmployeeConfiguration());
             builder.ApplyConfiguration(new EmployeeItineraryConfiguration());
             builder.ApplyConfiguration(new InvoiceConfiguration());
+            builder.ApplyConfiguration(new ShippingCompanyConfiguration());
+            builder.ApplyConfiguration(new ItineraryConfiguration());
+            builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new SaleConfiguration());
+            builder.ApplyConfiguration(new LotConfiguration());
+            builder.ApplyConfiguration(new WarehouseConfiguration());
+            builder.ApplyConfiguration(new WarehouseLotConfiguration());
+            builder.ApplyConfiguration(new StockMovementConfiguration());
+            builder.ApplyConfiguration(new VehicleConfiguration());
+            builder.ApplyConfiguration(new SupplierConfiguration());
         }
     }
 }

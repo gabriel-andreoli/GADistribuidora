@@ -9,5 +9,9 @@ namespace GADistribuidora.Domain.Entities
         public WarehouseLot WarehouseLot { get; set; }
         public Guid WarehouseLotId { get; set; }
         public EMovementType MovementType { get; set; }
+
+        public StockMovement()
+        {
+        }
     }
 }
