@@ -13,8 +13,8 @@ namespace GADistribuidora.Domain.Entities
         public string? CPF { get; set; }
         public DateTime? BornDate { get; set; }
         public string? Name { get; set; }
-        public Address? Address { get; set; }
-        public ContactInfo? ContactInfo { get; set; }
+        public Address? Address { get; set; } = new Address();
+        public ContactInfo? ContactInfo { get; set; } = new ContactInfo();
         public Company? Company { get; set; }
         public Guid CompanyId { get; set; }
 

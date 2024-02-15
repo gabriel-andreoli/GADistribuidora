@@ -1,17 +1,3 @@
-using GADistribuidora.Domain.Entities;
-using GADistribuidora.Infraestructure.Persistence;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using GADistribuidora.Domain.Services.Interfaces;
-using GADistribuidora.Domain.Services.Implementations;
-using GADistribuidora.Presentation.Filters;
-using GADistribuidora.Domain.Repositories.Implementations;
-using GADistribuidora.Domain.Repositories.Interfaces;
 using FluentValidation.AspNetCore;
 using GADistribuidora.Infraestructure.ProgramConfigurations.Containers;
 using GADistribuidora.Infraestructure.ProgramConfigurations;
@@ -24,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 //{
 //    options.Filters.Add(new ApiExceptionFilterAttribute());
 //});
+
+builder.AddDbContext();
+
 builder.Services.AddControllers().AddFluentValidation(config => 
 {
     config.RegisterValidatorsFromAssembly(typeof(Program).Assembly);
