@@ -41,23 +41,28 @@ namespace GADistribuidora.Infraestructure.Persistence
             .SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
 
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new ClientConfiguration());
+            builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new EmployeeConfiguration());
             builder.ApplyConfiguration(new EmployeeItineraryConfiguration());
             builder.ApplyConfiguration(new InvoiceConfiguration());
-            builder.ApplyConfiguration(new ShippingCompanyConfiguration());
             builder.ApplyConfiguration(new ItineraryConfiguration());
-            builder.ApplyConfiguration(new OrderConfiguration());
-            builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new SaleConfiguration());
             builder.ApplyConfiguration(new LotConfiguration());
+            builder.ApplyConfiguration(new OrderConfiguration());
+            builder.ApplyConfiguration(new PaymentConfiguration());
+            builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new ProductOrderConfiguration());
+            builder.ApplyConfiguration(new PurchaseConfiguration());
+            builder.ApplyConfiguration(new PurchaseProductConfiguration());
+            builder.ApplyConfiguration(new RouteItineraryConfiguration());
+            builder.ApplyConfiguration(new SaleConfiguration());
+            builder.ApplyConfiguration(new ShippingCompanyConfiguration());
+            builder.ApplyConfiguration(new StockMovementConfiguration());
+            builder.ApplyConfiguration(new SupplierConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new VehicleConfiguration());
             builder.ApplyConfiguration(new WarehouseConfiguration());
             builder.ApplyConfiguration(new WarehouseLotConfiguration());
-            builder.ApplyConfiguration(new StockMovementConfiguration());
-            builder.ApplyConfiguration(new VehicleConfiguration());
-            builder.ApplyConfiguration(new SupplierConfiguration());
         }
     }
 }

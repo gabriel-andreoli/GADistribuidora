@@ -11,6 +11,7 @@ namespace GADistribuidora.Infraestructure.Persistence.EntitiesConfigurations
             builder.HasKey(i => i.Id);
 
             builder.HasMany(i => i.RouteItineraries).WithOne(i => i.Invoice).HasForeignKey(i => i.InvoiceId).IsRequired();
+            builder.HasMany(i => i.Payments).WithOne(i => i.Invoice).HasForeignKey(i => i.InvoiceId).IsRequired();
         }
     }
 }
