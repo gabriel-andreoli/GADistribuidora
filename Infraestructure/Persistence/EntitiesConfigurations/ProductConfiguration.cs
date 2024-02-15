@@ -12,6 +12,7 @@ namespace GADistribuidora.Infraestructure.Persistence.EntitiesConfigurations
 
             builder.HasMany(p => p.ProductOrders).WithOne(p => p.Product).HasForeignKey(p => p.ProductId).IsRequired();
             builder.HasMany(p => p.Lots).WithOne(p  => p.Product).HasForeignKey(p => p.ProductId).IsRequired();
+            builder.HasMany(p => p.PurchaseProducts).WithOne(p => p.Product).HasForeignKey(p => p.ProductId).IsRequired();
             builder.Property(p => p.Description).HasMaxLength(150);
         }
     }

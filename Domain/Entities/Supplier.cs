@@ -9,6 +9,7 @@ namespace GADistribuidora.Domain.Entities
         public string? Name { get; set; }
         public Address Address { get; set; }
         public ContactInfo ContactInfo { get; set; }
+        public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
         public Supplier() { }
     }
 }

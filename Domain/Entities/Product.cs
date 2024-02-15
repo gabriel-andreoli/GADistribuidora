@@ -12,6 +12,7 @@ namespace GADistribuidora.Domain.Entities
         public string Price { get; set; }
         public ICollection<ProductOrder> ProductOrders { get; set; } = new List<ProductOrder>();
         public ICollection<Lot> Lots { get; set; } = new List<Lot>();
+        public ICollection<PurchaseProduct> PurchaseProducts { get; set; } = new List<PurchaseProduct>();
         public Product() { }
     }
 }
