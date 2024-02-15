@@ -6,5 +6,8 @@
         public string? Phone { get; set; }
         public string? CelPhone { get; set; }
         public string? Email { get; set; }
+        public ContactInfo()
+        {
+        }
     }
 }

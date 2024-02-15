@@ -10,5 +10,8 @@
         public int? BuildingNumber { get; set; }
         public string? PostalCode { get; set; }
         public string? Complement { get; set; }
+        public Address()
+        {
+        }
     }
 }
