@@ -1,4 +1,5 @@
 ﻿using GADistribuidora.Domain.Entities;
+using GADistribuidora.Domain.Handlers.Interfaces;
 using GADistribuidora.Domain.Repositories.Interfaces;
 using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Infraestructure.Persistence;
@@ -14,8 +15,14 @@ namespace GADistribuidora.Domain.Services.Implementations
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
+        private readonly INotificationHandler _notificationHandler;
 
-        public AuthenticateService(SignInManager<User> signInManager, UserManager<User> userManager, IUserRepository userRepository, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public AuthenticateService(
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
+            IUserRepository userRepository, 
+            IUnitOfWork unitOfWork,
+            INotificationHandler notificationHandler) : base(unitOfWork, notificationHandler)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -25,8 +32,7 @@ namespace GADistribuidora.Domain.Services.Implementations
         public async Task<bool> Authenticate(string email, string password)
         {
             var user = await _userRepository.GetByEmailAsNoTrackingAsync(email);
-            if (user is null)
-                return false;
+            if (user is null) return false;
             var result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
             return result.Succeeded;
         }
@@ -39,9 +45,8 @@ namespace GADistribuidora.Domain.Services.Implementations
         public async Task RegisterUser(RegisterUserCommand command)
         {
             var emailExists = await _userRepository.GetByEmailAsNoTrackingAsync(command.Email);
-            //Todo TO - NOTIFICATION
             if (emailExists != null)
-                throw new ArgumentException("O Email já está cadastrado, informe um válido ou entre em contato com o suporte.");
+                AddNotification("O Email já está cadastrado, informe um válido ou entre em contato com o suporte.");
 
             var user = new User() { Email = command.Email, UserName = command.Email, Name = command.Name };
             user.GenerateId();
@@ -61,9 +66,10 @@ namespace GADistribuidora.Domain.Services.Implementations
                 //user.Company = company;
             }
             var result = await _userManager.CreateAsync(user, command.Password);
-            if (!result.Succeeded) 
-                throw new ArgumentException($"Error, {result.Errors.FirstOrDefault().Description}");
-            Commit();
+            if (!result.Succeeded)
+                AddNotification($"Error, {result.Errors.FirstOrDefault().Description}");
+            if(!HasNotification())
+                Commit();
         }
     }
 }

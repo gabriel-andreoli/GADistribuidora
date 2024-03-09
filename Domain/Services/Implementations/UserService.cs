@@ -22,7 +22,10 @@ namespace GADistribuidora.Domain.Services.Implementations
 
         public async Task<User> GetByIdAsync(Guid id)
         {
-            return await _userRepository.GetByIdAsync(x => x.Id == id);
+            var user = await _userRepository.GetByIdAsync(x => x.Id == id);
+            if (user is null)
+                AddNotification("Usuário não existente.");
+            return user;
         }
 
         public async Task<ICollection<UserDTO>> GetAll() 
