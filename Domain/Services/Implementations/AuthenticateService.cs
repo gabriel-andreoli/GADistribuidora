@@ -24,7 +24,7 @@ namespace GADistribuidora.Domain.Services.Implementations
 
         public async Task<bool> Authenticate(string email, string password)
         {
-            var user = _userRepository.GetByEmail(email);
+            var user = await _userRepository.GetByEmailAsNoTrackingAsync(email);
             if (user is null)
                 return false;
             var result = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
@@ -38,7 +38,8 @@ namespace GADistribuidora.Domain.Services.Implementations
 
         public async Task RegisterUser(RegisterUserCommand command)
         {
-            var emailExists = _userRepository.GetByEmail(command.Email);
+            var emailExists = await _userRepository.GetByEmailAsNoTrackingAsync(command.Email);
+            //Todo TO - NOTIFICATION
             if (emailExists != null)
                 throw new ArgumentException("O Email já está cadastrado, informe um válido ou entre em contato com o suporte.");
 

@@ -14,7 +14,7 @@ namespace GADistribuidora.Presentation.Controllers
 {
     [Route("api/v1/authenticate")]
     [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class AuthenticateController : BaseApplicationController  
     {
         private readonly IAuthenticateService _authenticateService;
         private readonly IConfiguration _configuration;
@@ -47,7 +47,7 @@ namespace GADistribuidora.Presentation.Controllers
 
         private async Task<UserTokenDTO> GenerateToken(LoginCommand command)
         {
-            var user = await _userService.GetByEmail(command.Email);
+            var user = await _userService.GetByEmailAsNoTrackingAsync(command.Email);
             if (user == null)
                 throw new ArgumentException("Usuário não existente, verifique os dados e tente novamente");
 

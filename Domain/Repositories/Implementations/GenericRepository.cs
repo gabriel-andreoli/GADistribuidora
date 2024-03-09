@@ -22,9 +22,14 @@ namespace GADistribuidora.Domain.Repositories.Implementations
             return _context.Set<T>().AsQueryable();
         }
 
-        public Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().FirstOrDefaultAsync(predicate);
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<T> GetByIdAsNoTrackingAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
         public void Update(T entity)

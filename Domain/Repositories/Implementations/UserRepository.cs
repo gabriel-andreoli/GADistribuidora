@@ -10,9 +10,20 @@ namespace GADistribuidora.Domain.Repositories.Implementations
     {
         public UserRepository(GADistribuidoraContext context) : base(context) { }
 
-        public User GetByEmail(string email)
+        public User GetByEmailAsNoTracking(string email)
         {
-            return _context.Users.FirstOrDefault(x => x.Email == email && !x.Deleted);    
+            return _context.Users.AsNoTracking().FirstOrDefault(x => x.Email == email && !x.Deleted);
+        }
+
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email && !x.Deleted);
+        }
+
+
+        public async Task<User> GetByEmailAsNoTrackingAsync(string email)
+        {
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email && !x.Deleted);
         }
     }
 }

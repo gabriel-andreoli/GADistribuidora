@@ -8,7 +8,7 @@ namespace GADistribuidora.Presentation.Controllers
 {
     [ApiController]
     [Route("api/v1/users")]
-    public class UserController : ControllerBase
+    public class UserController : BaseApplicationController
     {
         private readonly IUserService _userService;
         public UserController(IUserService userService)
@@ -16,9 +16,8 @@ namespace GADistribuidora.Presentation.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        [Authorize]
-        [Route("{id}")]
+        [HttpGet("{id}")]
+        [Authorize]        
         public async Task<ActionResult<UserDTO>> GetById(Guid id) 
         {
             var user = await _userService.GetByIdAsync(id);

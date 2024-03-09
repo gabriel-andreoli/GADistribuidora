@@ -5,6 +5,8 @@ namespace GADistribuidora.Domain.Repositories.Interfaces
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        User GetByEmail(string email);
+        User GetByEmailAsNoTracking(string email);
+        Task<User> GetByEmailAsync(string email);
+        Task<User> GetByEmailAsNoTrackingAsync(string email);
     }
 }

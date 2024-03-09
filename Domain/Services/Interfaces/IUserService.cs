@@ -6,7 +6,7 @@ namespace GADistribuidora.Domain.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<User> GetByEmail(string email);
+        Task<User> GetByEmailAsNoTrackingAsync(string email);
         Task<User> GetByIdAsync(Guid id);
         Task<ICollection<UserDTO>> GetAll();
     }

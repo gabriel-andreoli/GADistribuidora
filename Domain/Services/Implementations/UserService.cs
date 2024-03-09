@@ -15,14 +15,14 @@ namespace GADistribuidora.Domain.Services.Implementations
             _userRepository = userRepository;
         }
 
-        public async Task<User> GetByEmail(string email)
+        public async Task<User> GetByEmailAsNoTrackingAsync(string email)
         {
-            return _userRepository.GetByEmail(email);
+            return await _userRepository.GetByEmailAsNoTrackingAsync(email);
         }
 
-        public Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
-            return _userRepository.GetByIdAsync(x => x.Id == id);
+            return await _userRepository.GetByIdAsync(x => x.Id == id);
         }
 
         public async Task<ICollection<UserDTO>> GetAll() 
