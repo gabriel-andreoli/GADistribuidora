@@ -1,4 +1,5 @@
 ﻿using GADistribuidora.Domain.Handlers.Interfaces;
+using GADistribuidora.Presentation.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -12,54 +13,51 @@ namespace GADistribuidora.Presentation.Controllers
             _notificationHandler = notificationHandler;
         }
 
-        protected async Task<ActionResult> CustomResponse(HttpStatusCode code, object result = null)
+        protected async Task<ActionResult<T>> CustomResponse<T>(HttpStatusCode code, T result) where T : class
         {
-            var resultResponse = await GenerateResponseBasedInHttpStatusCode(code, result);
-            return resultResponse;
+            ActionResult<T> resultResponse;
+            if (_notificationHandler.HasNotification())
+                resultResponse = await GenerateErrorResponse<T>(code);
+            else
+                resultResponse = await GenerateSuccessResponse<T>(code, result);
 
+            return resultResponse;
         }
 
-        private async Task<ActionResult> GenerateResponseBasedInHttpStatusCode(HttpStatusCode code, object result) 
+        private async Task<ActionResult<T>> GenerateSuccessResponse<T>(HttpStatusCode code, T result) where T : class
         {
-            ActionResult resultResponse = BadRequest(new { success = false });
-            if (_notificationHandler.HasNotification())
-            {
-                if ((int)code >= 400 && (int)code < 500)
-                {
-                    var resultDataError = new
-                    {
-                        success = false,
-                        errors = _notificationHandler.GetNotifications()
-                    };
-                    resultResponse = code switch
-                    {
-                        HttpStatusCode.BadRequest => BadRequest(resultDataError),
-                        HttpStatusCode.Unauthorized => Unauthorized(resultDataError),
-                        HttpStatusCode.Forbidden => Forbid(),
-                        HttpStatusCode.NotFound => NotFound(resultDataError),
-                        _ => BadRequest()
-                    };
-                }
-            }
-            else
-            {
-                if ((int)code >= 200 && (int)code < 300)
-                {
-                    var resultDataSuccess = new
-                    {
-                        success = true,
-                        data = result
-                    };
-                    resultResponse = code switch
-                    {
-                        HttpStatusCode.OK => Ok(resultDataSuccess),
-                        HttpStatusCode.Created => Created("", resultDataSuccess),
-                        HttpStatusCode.NoContent => NoContent(),
-                        _ => Ok()
-                    };
-                }
-            }
+            var responseDTO = new ResponseDTO<T>(true);
+            responseDTO.AddData(result);
 
+            ActionResult resultResponse = Ok(responseDTO);
+            if ((int)code >= 200 && (int)code < 300)
+            {
+                resultResponse = code switch
+                {
+                    HttpStatusCode.Created => Created("", responseDTO),
+                    HttpStatusCode.NoContent => NoContent(),
+                    _ => Ok()
+                };
+            }
+            return resultResponse;
+        }
+
+        private async Task<ActionResult<T>> GenerateErrorResponse<T>(HttpStatusCode code) where T : class
+        {
+            var responseDTO = new ResponseDTO<T>(false);
+            _notificationHandler.GetNotifications().ForEach(x => responseDTO.AddError(x));
+
+            ActionResult resultResponse = BadRequest(responseDTO);
+            if ((int)code >= 400 && (int)code < 500)
+            {
+                resultResponse = code switch
+                {
+                    HttpStatusCode.Unauthorized => Unauthorized(responseDTO),
+                    HttpStatusCode.Forbidden => Forbid(),
+                    HttpStatusCode.NotFound => NotFound(responseDTO),
+                    _ => BadRequest()
+                };
+            }
             return resultResponse;
         }
     }

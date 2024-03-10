@@ -1,4 +1,6 @@
-﻿using GADistribuidora.Domain.Repositories.Interfaces;
+﻿using GADistribuidora.Domain.ExtensionMethods.ApiExtension;
+using GADistribuidora.Domain.Handlers.Interfaces;
+using GADistribuidora.Domain.Repositories.Interfaces;
 using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Presentation.DTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +13,9 @@ namespace GADistribuidora.Presentation.Controllers
     public class UserController : BaseApplicationController
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        public UserController(
+            IUserService userService,
+            INotificationHandler notificationHandler) : base(notificationHandler) 
         {
             _userService = userService;
         }
@@ -21,7 +25,7 @@ namespace GADistribuidora.Presentation.Controllers
         public async Task<ActionResult<UserDTO>> GetById(Guid id) 
         {
             var user = await _userService.GetByIdAsync(id);
-            return await CustomResponse(System.Net.HttpStatusCode.OK, user);
+            return await CustomResponse(System.Net.HttpStatusCode.OK, user.ToUserDTO());
         }
 
         [HttpGet("")]

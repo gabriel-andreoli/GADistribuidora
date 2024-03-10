@@ -1,4 +1,6 @@
-﻿using GADistribuidora.Domain.Repositories.Implementations;
+﻿using GADistribuidora.Domain.Handlers.Implementations;
+using GADistribuidora.Domain.Handlers.Interfaces;
+using GADistribuidora.Domain.Repositories.Implementations;
 using GADistribuidora.Domain.Repositories.Interfaces;
 using GADistribuidora.Domain.Services.Implementations;
 using GADistribuidora.Domain.Services.Interfaces;
@@ -15,6 +17,8 @@ namespace GADistribuidora.Infraestructure.ProgramConfigurations.Containers
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            builder.Services.AddScoped<INotificationHandler, NotificationHandler>();
         }
     }
 }

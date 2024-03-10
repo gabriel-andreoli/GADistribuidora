@@ -1,4 +1,5 @@
 ﻿using GADistribuidora.Domain.Entities;
+using GADistribuidora.Domain.Handlers.Interfaces;
 using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Presentation.Commands;
 using GADistribuidora.Presentation.DTOs;
@@ -19,7 +20,11 @@ namespace GADistribuidora.Presentation.Controllers
         private readonly IAuthenticateService _authenticateService;
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
-        public AuthenticateController(IAuthenticateService authenticateService, IConfiguration configuration, IUserService userService)
+        public AuthenticateController(
+            IAuthenticateService authenticateService, 
+            IConfiguration configuration, 
+            IUserService userService,
+            INotificationHandler notificationHandler) : base(notificationHandler)
         {
             _authenticateService = authenticateService;
             _configuration = configuration;

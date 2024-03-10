@@ -1,5 +1,6 @@
 ﻿using GADistribuidora.Domain.Entities;
 using GADistribuidora.Domain.ExtensionMethods.ApiExtension;
+using GADistribuidora.Domain.Handlers.Interfaces;
 using GADistribuidora.Domain.Repositories.Interfaces;
 using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Infraestructure.Persistence;
@@ -10,7 +11,10 @@ namespace GADistribuidora.Domain.Services.Implementations
     public class UserService : ServiceBase, IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository) : base(unitOfWork)
+        public UserService(
+            IUnitOfWork unitOfWork, 
+            IUserRepository userRepository,
+            INotificationHandler notificationHandler) : base(unitOfWork, notificationHandler)
         {
             _userRepository = userRepository;
         }
