@@ -67,7 +67,7 @@ namespace GADistribuidora.Domain.Services.Implementations
             }
             var result = await _userManager.CreateAsync(user, command.Password);
             if (!result.Succeeded)
-                AddNotification($"Error, {result.Errors.FirstOrDefault().Description}");
+                result.Errors.ToList().ForEach(x => AddNotification($"Erro, {x.Description}"));
             if(!HasNotification())
                 Commit();
         }

@@ -5,6 +5,7 @@ using GADistribuidora.Domain.Services.Interfaces;
 using GADistribuidora.Presentation.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GADistribuidora.Presentation.Controllers
 {
@@ -25,13 +26,14 @@ namespace GADistribuidora.Presentation.Controllers
         public async Task<ActionResult<UserDTO>> GetById(Guid id) 
         {
             var user = await _userService.GetByIdAsync(id);
-            return await CustomResponse(System.Net.HttpStatusCode.OK, user.ToUserDTO());
+            return await CustomResponse(HttpStatusCode.OK, user.ToUserDTO());
         }
 
         [HttpGet("")]
         public async Task<ActionResult<ICollection<UserDTO>>> GetAll() 
         {
-            return Ok(_userService.GetAll());
+            return await CustomResponse(HttpStatusCode.OK, _userService.GetAll());
+            //return Ok(_userService.GetAll());
         }
     }
 }

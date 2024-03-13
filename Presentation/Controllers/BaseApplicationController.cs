@@ -13,18 +13,18 @@ namespace GADistribuidora.Presentation.Controllers
             _notificationHandler = notificationHandler;
         }
 
-        protected async Task<ActionResult<T>> CustomResponse<T>(HttpStatusCode code, T result) where T : class
+        protected async Task<ActionResult> CustomResponse<T>(HttpStatusCode code, T result) where T : class
         {
-            ActionResult<T> resultResponse;
+            ActionResult resultResponse;
             if (_notificationHandler.HasNotification())
-                resultResponse = await GenerateErrorResponse<T>(code);
+                resultResponse = await GenerateErrorResponse(code);
             else
-                resultResponse = await GenerateSuccessResponse<T>(code, result);
+                resultResponse = await GenerateSuccessResponse(code, result);
 
             return resultResponse;
         }
 
-        private async Task<ActionResult<T>> GenerateSuccessResponse<T>(HttpStatusCode code, T result) where T : class
+        private async Task<ActionResult> GenerateSuccessResponse<T>(HttpStatusCode code, T result) where T : class
         {
             var responseDTO = new ResponseDTO<T>(true);
             responseDTO.AddData(result);
@@ -36,15 +36,15 @@ namespace GADistribuidora.Presentation.Controllers
                 {
                     HttpStatusCode.Created => Created("", responseDTO),
                     HttpStatusCode.NoContent => NoContent(),
-                    _ => Ok()
+                    _ => Ok(responseDTO)
                 };
             }
             return resultResponse;
         }
 
-        private async Task<ActionResult<T>> GenerateErrorResponse<T>(HttpStatusCode code) where T : class
+        private async Task<ActionResult> GenerateErrorResponse(HttpStatusCode code)
         {
-            var responseDTO = new ResponseDTO<T>(false);
+            var responseDTO = new ResponseDTO<string>(false);
             _notificationHandler.GetNotifications().ForEach(x => responseDTO.AddError(x));
 
             ActionResult resultResponse = BadRequest(responseDTO);
@@ -55,7 +55,7 @@ namespace GADistribuidora.Presentation.Controllers
                     HttpStatusCode.Unauthorized => Unauthorized(responseDTO),
                     HttpStatusCode.Forbidden => Forbid(),
                     HttpStatusCode.NotFound => NotFound(responseDTO),
-                    _ => BadRequest()
+                    _ => BadRequest(responseDTO)
                 };
             }
             return resultResponse;

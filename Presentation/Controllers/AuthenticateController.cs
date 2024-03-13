@@ -32,11 +32,10 @@ namespace GADistribuidora.Presentation.Controllers
         }
 
         [HttpPost]
-        [Route("CreateUser")]
         public async Task<ActionResult> RegisterUser(RegisterUserCommand command)
         {
             await _authenticateService.RegisterUser(command);
-            return Created("", "Usuário criado com sucesso");
+            return await CustomResponse(HttpStatusCode.Created, "Usuário criado com sucesso.");
         }
 
         [HttpPost]
