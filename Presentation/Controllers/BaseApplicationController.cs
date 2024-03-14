@@ -60,5 +60,7 @@ namespace GADistribuidora.Presentation.Controllers
             }
             return resultResponse;
         }
+
+        protected void AddNotification(string message) => _notificationHandler.AddNotification(message);
     }
 }

@@ -43,17 +43,17 @@ namespace GADistribuidora.Presentation.Controllers
         public async Task<ActionResult> Login(LoginCommand command) 
         {
             var isValidUser = await _authenticateService.Authenticate(command.Email, command.Password);
-            if (isValidUser)
-                return Ok(await GenerateToken(command));
-            else
-                return BadRequest("Login ou senha inválidos");
+            if (!isValidUser)
+                AddNotification("Usuário inválido");
+
+            return await CustomResponse(HttpStatusCode.OK, await GenerateToken(command));
         }
 
         private async Task<UserTokenDTO> GenerateToken(LoginCommand command)
         {
             var user = await _userService.GetByEmailAsNoTrackingAsync(command.Email);
             if (user == null)
-                throw new ArgumentException("Usuário não existente, verifique os dados e tente novamente");
+                AddNotification("Usuário não existente, verifique os dados e tente novamente");
 
             var claims = new[] 
             {

@@ -64,7 +64,7 @@ namespace GADistribuidora.Domain.Services.Implementations
                 //if (company == null)
                 //    throw new ArgumentException("A empresa fornecida não existe");
                 //user.Company = company;
-            }
+            }            
             var result = await _userManager.CreateAsync(user, command.Password);
             if (!result.Succeeded)
                 result.Errors.ToList().ForEach(x => AddNotification($"Erro, {x.Description}"));
